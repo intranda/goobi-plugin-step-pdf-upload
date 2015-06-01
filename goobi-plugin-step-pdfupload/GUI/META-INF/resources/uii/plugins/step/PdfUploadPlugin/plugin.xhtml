@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:x="http://myfaces.apache.org/tomahawk">
+
+    <h:form enctype="multipart/form-data">
+
+
+        <h:panelGroup>
+            <x:inputFileUpload id="fileupload3" value="#{AktuelleSchritteForm.myPlugin.uploadedFile}" storage="file" styleClass="fileUploadInput" required="false" />
+            <h:commandButton value="#{msgs.uploadFile}" id="button3" action="#{MassImportForm.uploadFile}">
+            </h:commandButton>
+        </h:panelGroup>
+
+
+    </h:form>
+
+
+</ui:composition>
