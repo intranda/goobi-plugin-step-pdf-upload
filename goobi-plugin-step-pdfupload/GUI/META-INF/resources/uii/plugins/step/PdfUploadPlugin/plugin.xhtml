@@ -1,15 +1,74 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:x="http://myfaces.apache.org/tomahawk">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:x="http://myfaces.apache.org/tomahawk" xmlns:intranda="http://xmlns.jcp.org/jsf/composite/composites">
 
-    <h:form enctype="multipart/form-data">
+    <h:form enctype="multipart/form-data" prependId="false">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box thin-margin box-bordered">
+
+                    <div class="box-title">
+                        <h3>
+                            <h:outputText value="#{msgs.pdfUpload}" />
+                        </h3>
+
+                    </div>
 
 
-        <h:panelGroup>
-            <x:inputFileUpload id="fileupload3" value="#{AktuelleSchritteForm.myPlugin.uploadedFile}" storage="file" styleClass="fileUploadInput" required="false" />
-            <h:commandButton value="#{msgs.uploadFile}" id="button3" action="#{MassImportForm.uploadFile}">
-            </h:commandButton>
-        </h:panelGroup>
+                    <div class="box-content nopadding">
+                        <table class="table table-bordered">
 
+                            <x:dataList var="file" value="#{AktuelleSchritteForm.myPlugin.uploadedFiles}" styleClass="table table-bordered">
+                                <tr>
+                                    <td>
+                                        <h:outputText value="#{file.filename}" title="#{file.comment}" />
+                                    </td>
+<!--                                     <td> -->
+<!--                                         <h:outputText value="#{file.comment}" /> -->
+<!--                                     </td> -->
+                                    <td>
+                                        <h:outputText value="#{file.sizeForGui}" />
+                                    </td>
+                                    <td>
+                                        <!--  delete button -->
+                                        <h:commandLink action="#{AktuelleSchritteForm.myPlugin.deleteFile}" title="#{msgs.deleteFile}">
+                                            <i class="fa fa-trash-o" style="margin-left: 3px" />
+                                            <x:updateActionListener property="#{AktuelleSchritteForm.myPlugin.currentFile}" value="#{file}" />
+                                        </h:commandLink>
+                                    </td>
+                                </tr>
+                            </x:dataList>
+                        </table>
 
+                        <br />
+                        <div class="form-actions">
+
+     
+                            <intranda:formInputText name="comment" label="#{msgs.comment}" field="#{AktuelleSchritteForm.myPlugin.comment}" help="#{msgs.helpComment}" fieldStyle="form-control" required="false" />
+                            
+                            <br/>
+                            <x:inputFileUpload id="input-file" value="#{AktuelleSchritteForm.myPlugin.uploadedFile}" storage="file" required="false" />
+                       
+                            <h:commandButton value="#{msgs.uploadFile}" styleClass="btn btn-primary font-size-s pull-right" action="#{AktuelleSchritteForm.myPlugin.uploadFile}">
+                            </h:commandButton>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+									$('#input-file')
+											.before(
+													'<input type="button" id="button-file" class="btn btn-primary font-size-s" value="#{msgs.selectFile}" />');
+									$('#input-file').hide();
+									$('body').on(
+											'click',
+											'#button-file',
+											function() {
+												$('#input-file').trigger(
+														'click');
+											});
+								</script>
     </h:form>
 
 
