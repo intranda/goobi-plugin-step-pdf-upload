@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config_plugin>
+	<!-- allowed values: master, source, derivate -->
+    <folder>derivate</folder>
+    <extensions>
+        <extension>pdf</extension>
+<!--         <extension>doc</extension> -->
+    </extensions>
+</config_plugin>
