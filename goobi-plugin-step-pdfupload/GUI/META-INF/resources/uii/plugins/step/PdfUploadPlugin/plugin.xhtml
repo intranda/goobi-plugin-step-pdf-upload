@@ -2,11 +2,12 @@
 
     <h:form enctype="multipart/form-data" prependId="false">
         <div class="row">
-            <div class="col-sm-12">
-                <div class="box thin-margin box-bordered">
+            <div class="col-sm-6">
+                <div class="box box-color lightgrey box-bordered">
 
                     <div class="box-title">
                         <h3>
+                            <i class="fa fa-upload"></i>
                             <h:outputText value="#{msgs.pdfUpload}" />
                         </h3>
 
@@ -21,9 +22,6 @@
                                     <td>
                                         <h:outputText value="#{file.filename}" title="#{file.comment}" />
                                     </td>
-<!--                                     <td> -->
-<!--                                         <h:outputText value="#{file.comment}" /> -->
-<!--                                     </td> -->
                                     <td>
                                         <h:outputText value="#{file.sizeForGui}" />
                                     </td>
@@ -39,14 +37,12 @@
                         </table>
 
                         <br />
+                        <intranda:formInputText name="comment" label="#{msgs.comment}" field="#{AktuelleSchritteForm.myPlugin.comment}" help="#{msgs.helpComment}" fieldStyle="form-control" required="false" />
+                      
                         <div class="form-actions">
 
-     
-                            <intranda:formInputText name="comment" label="#{msgs.comment}" field="#{AktuelleSchritteForm.myPlugin.comment}" help="#{msgs.helpComment}" fieldStyle="form-control" required="false" />
-                            
-                            <br/>
                             <x:inputFileUpload id="input-file" value="#{AktuelleSchritteForm.myPlugin.uploadedFile}" storage="file" required="false" />
-                       
+
                             <h:commandButton value="#{msgs.uploadFile}" styleClass="btn btn-primary font-size-s pull-right" action="#{AktuelleSchritteForm.myPlugin.uploadFile}">
                             </h:commandButton>
 

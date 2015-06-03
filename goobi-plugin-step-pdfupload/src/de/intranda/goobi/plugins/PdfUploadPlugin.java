@@ -122,6 +122,9 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
                 List<? extends Metadata> pageNoMetadata = page.getAllMetadataByType(logType);
                 if (pageNoMetadata != null && !pageNoMetadata.isEmpty()) {
                     comment = pageNoMetadata.get(0).getValue();
+                    if (comment.equals("uncounted")) {
+                        comment = "";
+                    }
                 }
 
                 File file = new File(imagefolder + filename);
