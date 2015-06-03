@@ -34,7 +34,7 @@ import net.xeoh.plugins.base.annotations.PluginImplementation;
 @PluginImplementation
 public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, IPlugin {
 
-    private static final String PLUGIN_NAME = "PdfUploadPlugin";
+    private static final String PLUGIN_NAME = "intranda_step_pdfUpload";
     private static final Logger logger = Logger.getLogger(PdfUploadPlugin.class);
 
     private Process process;
