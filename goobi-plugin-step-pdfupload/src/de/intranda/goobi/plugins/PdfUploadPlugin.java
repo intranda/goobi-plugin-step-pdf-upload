@@ -99,6 +99,11 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
             logger.error(e);
         }
 
+       File f = new File(imagefolder);
+       if (!f.isDirectory()) {
+           f.mkdirs();
+       }
+        
         allowedFileExtensions = config.getList("extensions.extension");
         if (allowedFileExtensions == null || allowedFileExtensions.isEmpty()) {
             allowedFileExtensions = new ArrayList<String>();
