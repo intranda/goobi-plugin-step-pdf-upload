@@ -90,7 +90,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
             } else if (folder.equalsIgnoreCase("derivate")) {
                 imagefolder = process.getImagesTifDirectory(false);
             } else if (folder.equalsIgnoreCase("source")) {
-                imagefolder = process.getSourceDirectory();
+                imagefolder = process.getSourceDirectory() + File.separator;
             } else {
                 Helper.setFehlerMeldung("unknownFolderConfigurationError");
                 imagefolder = process.getImagesTifDirectory(false);
