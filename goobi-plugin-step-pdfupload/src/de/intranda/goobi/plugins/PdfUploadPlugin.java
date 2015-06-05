@@ -110,7 +110,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
             allowedFileExtensions.add("pdf");
         }
 
-        // TODO load old data from mets file/filesystem
+        // load old data from mets file/filesystem
 
         if (physical.getAllChildren() != null && !physical.getAllChildren().isEmpty()) {
             for (DocStruct page : physical.getAllChildren()) {
