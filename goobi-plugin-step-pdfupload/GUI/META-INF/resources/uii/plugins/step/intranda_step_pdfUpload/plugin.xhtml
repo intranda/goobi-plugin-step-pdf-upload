@@ -58,7 +58,18 @@
 
             <div class="box-content nopadding">
                 <h:panelGroup rendered="#{NavigationForm.uiStatus.image_upload ne 'tab2'}" styleClass="padding-all-more">
-                    <intranda:formInputText name="comment" label="#{msgs.comment}" field="#{AktuelleSchritteForm.myPlugin.comment}" help="#{msgs.helpComment}" fieldStyle="form-control" required="false" />
+
+                    <div class="form-group" style="">
+                        <div class="col-sm-3 control-label">
+                            <h:outputLabel for="comment" value="#{msgs.comment}" />
+
+                        </div>
+                        <div class="col-sm-9">
+                            <x:inputText id="comment" forceId="true" styleClass="form-control" value="#{AktuelleSchritteForm.myPlugin.comment}" required="false">
+                                <f:ajax execute="@form" event="valueChange" />
+                            </x:inputText>
+                        </div>
+                    </div>
 
                     <div class="form-actions">
 
