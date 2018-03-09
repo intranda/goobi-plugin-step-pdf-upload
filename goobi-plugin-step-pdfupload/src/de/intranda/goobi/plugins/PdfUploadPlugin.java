@@ -82,7 +82,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
             logger.error(e);
         }
 
-        XMLConfiguration config = ConfigPlugins.getPluginConfig(this);
+        XMLConfiguration config = ConfigPlugins.getPluginConfig(PLUGIN_NAME);
         String folder = config.getString("folder", "derivate");
         try {
             if (folder.equalsIgnoreCase("master")) {
