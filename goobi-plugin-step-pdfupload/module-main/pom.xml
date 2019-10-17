@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.intranda.goobi.plugins.step</groupId>
 	<artifactId>pdfUpload-main</artifactId>
@@ -12,12 +13,7 @@
 		<artifactId>pdfUpload</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<repositories>
-		<repository>
-			<id>intranda</id>
-			<url>https://nexus.intranda.com/repository/intranda</url>
-		</repository>
-	</repositories>
+
 	<build>
 		<finalName>${jar.name}</finalName>
 		<sourceDirectory>${project.basedir}/../src</sourceDirectory>
@@ -48,32 +44,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.8</version>
-				<executions>
-					<execution>
-						<id>copy-installed</id>
-						<phase>install</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>${project.artifactId}</artifactId>
-									<version>${project.version}</version>
-									<type>${project.packaging}</type>
-									<destFileName>${jar.name}.jar</destFileName>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>${dest.folder}</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
 				<version>1.4</version>
@@ -90,27 +60,33 @@
 					<shortRevisionLength>10</shortRevisionLength>
 					<doCheck>false</doCheck>
 				</configuration>
-			</plugin><plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.1.0</version>
-            <configuration>
-                <archive>
-                    <manifestEntries>
-                        <Build-Time>${maven.build.timestamp}</Build-Time>
-                    </manifestEntries>
-                    <manifestSections>
-                        <manifestSection>
-                            <name>Versions</name>
-                            <manifestEntries>
-                                <Implementation-Version>${project.version}</Implementation-Version>
-                                <Implementation-SCM-Revision>${buildNumber}</Implementation-SCM-Revision>
-                                <Implementation-SCM-Branch>${scmBranch}</Implementation-SCM-Branch>
-                            </manifestEntries>
-                        </manifestSection>
-                    </manifestSections>
-                </archive>
-            </configuration>
-        </plugin></plugins>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Build-Time>${maven.build.timestamp}</Build-Time>
+						</manifestEntries>
+						<manifestSections>
+							<manifestSection>
+								<name>Versions</name>
+								<manifestEntries>
+									<Implementation-Version>${project.version}</Implementation-Version>
+									<Implementation-SCM-Revision>${buildNumber}</Implementation-SCM-Revision>
+									<Implementation-SCM-Branch>${scmBranch}</Implementation-SCM-Branch>
+								</manifestEntries>
+							</manifestSection>
+						</manifestSections>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
-<scm><url>scm:git:ssh://git@gitea.intranda.com:goobi-workflow/goobi-plugin-step-pdfupload.git</url><connection>scm:git:ssh://git@gitea.intranda.com:goobi-workflow/goobi-plugin-step-pdfupload.git</connection></scm></project>
+	<scm>
+		<url>scm:git:ssh://git@gitea.intranda.com:goobi-workflow/goobi-plugin-step-imageqa.git</url>
+		<connection>scm:git:ssh://git@gitea.intranda.com:goobi-workflow/goobi-plugin-step-imageqa.git</connection>
+	</scm>
+</project>

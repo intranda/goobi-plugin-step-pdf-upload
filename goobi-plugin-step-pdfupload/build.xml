@@ -1,0 +1,9 @@
+<project name="goobi-plugin-step-imageqa" default="devbuild">
+	<target name="devbuild">
+		<exec executable="/usr/local/bin/mvn">
+			<arg value="package"/>
+		</exec>
+		<copy file="module-gui/target/plugin_intranda_step_pdfUpload-GUI.jar" todir="/opt/digiverso/goobi/plugins/GUI/"/>
+		<copy file="module-main/target/plugin_intranda_step_pdfUpload.jar" todir="/opt/digiverso/goobi/plugins/step/"/>
+	</target>
+</project>
