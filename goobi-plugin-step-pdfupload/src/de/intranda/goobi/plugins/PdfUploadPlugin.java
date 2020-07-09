@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.configuration.XMLConfiguration;
@@ -22,6 +23,7 @@ import org.primefaces.event.FileUploadEvent;
 import de.intranda.goobi.plugins.util.PdfFile;
 import de.sub.goobi.config.ConfigPlugins;
 import de.sub.goobi.helper.Helper;
+import net.xeoh.plugins.base.annotations.PluginImplementation;
 import ugh.dl.DocStruct;
 import ugh.dl.DocStructType;
 import ugh.dl.Fileformat;
@@ -29,7 +31,6 @@ import ugh.dl.Metadata;
 import ugh.dl.MetadataType;
 import ugh.dl.Prefs;
 import ugh.dl.Reference;
-import net.xeoh.plugins.base.annotations.PluginImplementation;
 
 @PluginImplementation
 
@@ -48,7 +49,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
 
     private String comment;
     private PdfFile currentFile;
-    private List<PdfFile> uploadedFiles = new ArrayList<PdfFile>();
+    private List<PdfFile> uploadedFiles = new ArrayList<>();
 
     private Prefs prefs;
     private DocStructType pageType;
@@ -58,7 +59,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
     private DocStruct logical;
     private DocStruct physical;
 
-    @SuppressWarnings("unchecked")
+    @Override
     public void initialize(Step step, String returnPath) {
 
         super.returnPath = returnPath;
@@ -98,14 +99,14 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
             logger.error(e);
         }
 
-       File f = new File(imagefolder);
-       if (!f.isDirectory()) {
-           f.mkdirs();
-       }
-        
-        allowedFileExtensions = config.getList("extensions.extension");
+        File f = new File(imagefolder);
+        if (!f.isDirectory()) {
+            f.mkdirs();
+        }
+
+        allowedFileExtensions = Arrays.asList(config.getStringArray("extensions.extension"));
         if (allowedFileExtensions == null || allowedFileExtensions.isEmpty()) {
-            allowedFileExtensions = new ArrayList<String>();
+            allowedFileExtensions = new ArrayList<>();
             allowedFileExtensions.add("pdf");
         }
 
@@ -134,8 +135,8 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
 
     }
 
-    
-    
+
+
     public void handleFileUpload(FileUploadEvent event) {
         try {
             copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
@@ -143,12 +144,12 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
         } catch (IOException e) {
             logger.error(e);
         }
-        
-        
+
+
     }
-    
+
     public void copyFile(String fileName, InputStream in) {
-        
+
         if (!checkExtension(fileName)) {
             Helper.setFehlerMeldung("fileTypeNotAllowed");
             return;
@@ -171,7 +172,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
             Helper.setFehlerMeldung("invalidCharacter");
             return;
         }
-        
+
         OutputStream out = null;
         String name = imagefolder + fileName;
         File f = new File(name);
@@ -244,13 +245,13 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
         }
 
         comment = "";
-    
+
     }
-    
-    
 
 
-       
+
+
+
 
     private boolean checkExtension(String basename) {
         for (String extension : allowedFileExtensions) {
@@ -328,7 +329,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
                     fileformat.getDigitalDocument().getFileSet().removeFile(child.getAllContentFiles().get(0));
 
                     fileformat.getDigitalDocument().getPhysicalDocStruct().removeChild(child);
-                    List<Reference> refs = new ArrayList<Reference>(child.getAllFromReferences());
+                    List<Reference> refs = new ArrayList<>(child.getAllFromReferences());
                     for (ugh.dl.Reference ref : refs) {
                         ref.getSource().removeReferenceTo(child);
                     }
@@ -338,7 +339,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
             if (physical.getAllChildren() != null && !physical.getAllChildren().isEmpty()) {
                 int order = 1;
                 for (DocStruct child : physical.getAllChildren()) {
-                    // FIX phys order 
+                    // FIX phys order
                     Metadata pageNo = child.getAllMetadataByType(physType).get(0);
                     pageNo.setValue(String.valueOf(order));
                     order++;
