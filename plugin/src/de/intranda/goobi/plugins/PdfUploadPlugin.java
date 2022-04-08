@@ -139,7 +139,7 @@ public class PdfUploadPlugin extends AbstractStepPlugin implements IStepPlugin, 
 
     public void handleFileUpload(FileUploadEvent event) {
         try {
-            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            copyFile(event.getFile().getFileName(), event.getFile().getInputStream());
 
         } catch (IOException e) {
             logger.error(e);
