@@ -1,4 +1,12 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:x="http://myfaces.apache.org/tomahawk" xmlns:intranda="http://xmlns.jcp.org/jsf/composite/composites">
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:x="http://myfaces.apache.org/tomahawk"
+    xmlns:intranda="http://xmlns.jcp.org/jsf/composite/composites">
 
     <style>
 #upload .ui-widget-header {
@@ -18,7 +26,8 @@
     padding: 0.3em 1em;
 }
 
-#upload .ui-fileupload-buttonbar span.ui-button span.ui-button-icon-left {
+#upload .ui-fileupload-buttonbar span.ui-button span.ui-button-icon-left
+    {
     display: none;
 }
 
@@ -30,7 +39,9 @@
     display: none;
 }
 </style>
-    <h:form prependId="false" enctype="multipart/form-data">
+    <h:form
+        prependId="false"
+        enctype="multipart/form-data">
         <div class="box box-color lightgrey box-bordered">
 
             <div class="box-title">
@@ -42,31 +53,56 @@
 
                 <ul class="tabs">
                     <li class="#{NavigationForm.uiStatus.image_upload ne 'tab2'?'active':''}">
-                        <h:commandLink action="#{NavigationForm.Reload}" value="#{msgs.plugin_imageUpload}">
-                            <f:setPropertyActionListener target="#{NavigationForm.uiStatus.image_upload}" value="" />
-                            <f:ajax render="@form" execute="@form" />
+                        <h:commandLink
+                            action="#{NavigationForm.Reload}"
+                            value="#{msgs.plugin_imageUpload}">
+                            <f:setPropertyActionListener
+                                target="#{NavigationForm.uiStatus.image_upload}"
+                                value="" />
+                            <f:ajax
+                                render="@form"
+                                execute="@form" />
                         </h:commandLink>
                     </li>
                     <li class="#{NavigationForm.uiStatus.image_upload eq 'tab2'?'active':''}">
-                        <h:commandLink action="#{NavigationForm.Reload}" value="#{msgs.overview}">
-                            <f:setPropertyActionListener target="#{NavigationForm.uiStatus.image_upload}" value="tab2" />
-                            <f:ajax render="@form" execute="@form" />
+                        <h:commandLink
+                            action="#{NavigationForm.Reload}"
+                            value="#{msgs.overview}">
+                            <f:setPropertyActionListener
+                                target="#{NavigationForm.uiStatus.image_upload}"
+                                value="tab2" />
+                            <f:ajax
+                                render="@form"
+                                execute="@form" />
                         </h:commandLink>
                     </li>
                 </ul>
             </div>
 
             <div class="box-content nopadding">
-                <h:panelGroup rendered="#{NavigationForm.uiStatus.image_upload ne 'tab2'}" styleClass="padding-all-more">
+                <h:panelGroup
+                    rendered="#{NavigationForm.uiStatus.image_upload ne 'tab2'}"
+                    styleClass="padding-all-more">
 
-                    <div class="form-group" style="">
+                    <div
+                        class="form-group"
+                        style="">
                         <div class="col-sm-3 control-label">
-                            <h:outputLabel for="comment" value="#{msgs.comment}" />
+                            <h:outputLabel
+                                for="comment"
+                                value="#{msgs.comment}" />
 
                         </div>
                         <div class="col-sm-9">
-                            <x:inputText id="comment" forceId="true" styleClass="form-control" value="#{AktuelleSchritteForm.myPlugin.comment}" required="false">
-                                <f:ajax execute="@form" event="valueChange" />
+                            <x:inputText
+                                id="comment"
+                                forceId="true"
+                                styleClass="form-control"
+                                value="#{AktuelleSchritteForm.myPlugin.comment}"
+                                required="false">
+                                <f:ajax
+                                    execute="@form"
+                                    event="valueChange" />
                             </x:inputText>
                         </div>
                     </div>
@@ -75,7 +111,23 @@
 
                         <br />
 
-                        <p:fileUpload fileUploadListener="#{AktuelleSchritteForm.myPlugin.handleFileUpload}" id="upload" auto="true" style="text-align:center;" multiple="true" dragDropSupport="true" label="#{msgs.selectFiles}" allowTypes="/(\.|\/)(pdf)$/" />
+      
+                            
+                     <p:fileUpload
+											listener="#{AktuelleSchritteForm.myPlugin.handleFileUpload}"
+											id="upload"
+											auto="true"
+                     style="text-align:center;"
+											mode="advanced"
+											multiple="true"
+											dragDropSupport="true"
+											label="#{msgs.selectFiles}"
+											sizeLimit="1000000000000"
+											fileLimit="42000"
+											update="@form"
+											allowTypes="/^.*$/"
+										
+                                            />
                     </div>
                 </h:panelGroup>
 
@@ -86,19 +138,30 @@
                     <table class="table table-bordered">
 
 
-                        <x:dataList var="file" value="#{AktuelleSchritteForm.myPlugin.uploadedFiles}" styleClass="table table-bordered">
+                        <x:dataList
+                            var="file"
+                            value="#{AktuelleSchritteForm.myPlugin.uploadedFiles}"
+                            styleClass="table table-bordered">
                             <tr>
                                 <td>
-                                    <h:outputText value="#{file.filename}" title="#{file.comment}" />
+                                    <h:outputText
+                                        value="#{file.filename}"
+                                        title="#{file.comment}" />
                                 </td>
                                 <td>
                                     <h:outputText value="#{file.sizeForGui}" />
                                 </td>
                                 <td>
                                     <!--  delete button -->
-                                    <h:commandLink action="#{AktuelleSchritteForm.myPlugin.deleteFile}" title="#{msgs.deleteFile}">
-                                        <i class="btn fa fa-trash-o" style="margin-left: 3px" />
-                                        <x:updateActionListener property="#{AktuelleSchritteForm.myPlugin.currentFile}" value="#{file}" />
+                                    <h:commandLink
+                                        action="#{AktuelleSchritteForm.myPlugin.deleteFile}"
+                                        title="#{msgs.deleteFile}">
+                                        <i
+                                            class="btn fa fa-trash-o"
+                                            style="margin-left: 3px" />
+                                        <x:updateActionListener
+                                            property="#{AktuelleSchritteForm.myPlugin.currentFile}"
+                                            value="#{file}" />
                                     </h:commandLink>
                                 </td>
                             </tr>
