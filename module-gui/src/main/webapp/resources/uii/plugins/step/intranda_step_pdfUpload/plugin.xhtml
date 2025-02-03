@@ -5,7 +5,6 @@
     xmlns:composite="http://java.sun.com/jsf/composite"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:x="http://myfaces.apache.org/tomahawk"
     xmlns:intranda="http://xmlns.jcp.org/jsf/composite/composites">
 
     <style>
@@ -94,7 +93,7 @@
 
                         </div>
                         <div class="col-sm-9">
-                            <x:inputText
+                            <h:inputText
                                 id="comment"
                                 forceId="true"
                                 styleClass="form-control"
@@ -103,7 +102,7 @@
                                 <f:ajax
                                     execute="@form"
                                     event="valueChange" />
-                            </x:inputText>
+                            </h:inputText>
                         </div>
                     </div>
 
@@ -138,7 +137,7 @@
                     <table class="table table-bordered">
 
 
-                        <x:dataList
+                        <ui:repeat
                             var="file"
                             value="#{AktuelleSchritteForm.myPlugin.uploadedFiles}"
                             styleClass="table table-bordered">
@@ -159,13 +158,13 @@
                                         <i
                                             class="btn fa fa-trash-o"
                                             style="margin-left: 3px" />
-                                        <x:updateActionListener
-                                            property="#{AktuelleSchritteForm.myPlugin.currentFile}"
+                                        <f:setPropertyActionListener
+                                            target="#{AktuelleSchritteForm.myPlugin.currentFile}"
                                             value="#{file}" />
                                     </h:commandLink>
                                 </td>
                             </tr>
-                        </x:dataList>
+                        </ui:repeat>
 
 
                     </table>
