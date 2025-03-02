@@ -5,8 +5,10 @@
     xmlns:composite="http://java.sun.com/jsf/composite"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:x="http://myfaces.apache.org/tomahawk"
-    xmlns:intranda="http://xmlns.jcp.org/jsf/composite/composites">
+    xmlns:intranda="http://xmlns.jcp.org/jsf/composite/compositesPG"
+    xmlns:section="http://goobi.io/section"
+    xmlns:form="http://goobi.io/form"
+    xmlns:table="http://goobi.io/table">
 
     <style>
 #upload .ui-widget-header {
@@ -40,138 +42,116 @@
 }
 </style>
     <h:form
-        prependId="false"
         enctype="multipart/form-data">
-        <div class="box box-color lightgrey box-bordered">
-
-            <div class="box-title">
-                <h3>
-                    <i class="fa fa-upload"></i>
-                    <h:outputText value="#{msgs.files}" />
-                </h3>
-
-
-                <ul class="tabs">
-                    <li class="#{NavigationForm.uiStatus.image_upload ne 'tab2'?'active':''}">
-                        <h:commandLink
-                            action="#{NavigationForm.Reload}"
-                            value="#{msgs.plugin_imageUpload}">
-                            <f:setPropertyActionListener
-                                target="#{NavigationForm.uiStatus.image_upload}"
-                                value="" />
-                            <f:ajax
-                                render="@form"
-                                execute="@form" />
-                        </h:commandLink>
-                    </li>
-                    <li class="#{NavigationForm.uiStatus.image_upload eq 'tab2'?'active':''}">
-                        <h:commandLink
-                            action="#{NavigationForm.Reload}"
-                            value="#{msgs.overview}">
-                            <f:setPropertyActionListener
-                                target="#{NavigationForm.uiStatus.image_upload}"
-                                value="tab2" />
-                            <f:ajax
-                                render="@form"
-                                execute="@form" />
-                        </h:commandLink>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="box-content nopadding">
-                <h:panelGroup
-                    rendered="#{NavigationForm.uiStatus.image_upload ne 'tab2'}"
-                    styleClass="padding-all-more">
-
-                    <div
-                        class="form-group"
-                        style="">
-                        <div class="col-sm-3 control-label">
-                            <h:outputLabel
-                                for="comment"
-                                value="#{msgs.comment}" />
-
-                        </div>
-                        <div class="col-sm-9">
-                            <x:inputText
-                                id="comment"
-                                forceId="true"
-                                styleClass="form-control"
-                                value="#{AktuelleSchritteForm.myPlugin.comment}"
-                                required="false">
+        <section:section type="neutral">
+            <section:header
+                icon="upload"
+                title="#{msgs.plugin_imageUpload}">
+                <section:header-actions>
+                    <ul class="tabs">
+                        <li class="tab #{NavigationForm.uiStatus.image_upload ne 'tab2'?'active':''}">
+                            <h:commandLink
+                                action="#{NavigationForm.Reload}"
+                                value="#{msgs.plugin_imageUpload}">
+                                <f:setPropertyActionListener
+                                    target="#{NavigationForm.uiStatus.image_upload}"
+                                    value="" />
                                 <f:ajax
-                                    execute="@form"
-                                    event="valueChange" />
-                            </x:inputText>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-
-                        <br />
-
-      
-                            
-                     <p:fileUpload
-											listener="#{AktuelleSchritteForm.myPlugin.handleFileUpload}"
-											id="upload"
-											auto="true"
-                     style="text-align:center;"
-											mode="advanced"
-											multiple="true"
-											dragDropSupport="true"
-											label="#{msgs.selectFiles}"
-											sizeLimit="1000000000000"
-											fileLimit="42000"
-											update="@form"
-											allowTypes="/^.*$/"
-										
-                                            />
-                    </div>
+                                    render="@form"
+                                    execute="@form" />
+                            </h:commandLink>
+                        </li>
+                        <li class="tab #{NavigationForm.uiStatus.image_upload eq 'tab2'?'active':''}">
+                            <h:commandLink
+                                action="#{NavigationForm.Reload}"
+                                value="#{msgs.overview}">
+                                <f:setPropertyActionListener
+                                    target="#{NavigationForm.uiStatus.image_upload}"
+                                    value="tab2" />
+                                <f:ajax
+                                    render="@form"
+                                    execute="@form" />
+                            </h:commandLink>
+                        </li>
+                    </ul>
+                </section:header-actions>
+            </section:header>
+            <section:body>
+                <h:panelGroup
+                rendered="#{NavigationForm.uiStatus.image_upload ne 'tab2'}">
+                    <form:field
+                        label="#{msgs.comment}">
+                        <h:inputText
+                            id="comment"
+                            forceId="true"
+                            styleClass="form-control"
+                            value="#{AktuelleSchritteForm.myPlugin.comment}"
+                            required="false">
+                            <f:ajax
+                            execute="@form"
+                            event="valueChange" />
+                        </h:inputText>
+                    </form:field>
+                    <form:field
+                        label="#{msgs.damageDocFileUpload}"
+                        group="true">
+                        <p:fileUpload
+                            listener="#{AktuelleSchritteForm.myPlugin.handleFileUpload}"
+                            id="upload"
+                            auto="true"
+                            style="text-align:center;"
+                            mode="advanced"
+                            multiple="true"
+                            dragDropSupport="true"
+                            label="#{msgs.selectFiles}"
+                            sizeLimit="1000000000000"
+                            fileLimit="42000"
+                            update="@form"
+                            allowTypes="/^.*$/"
+                            />
+                    </form:field>
                 </h:panelGroup>
 
                 <h:panelGroup rendered="#{NavigationForm.uiStatus.image_upload eq 'tab2'}">
+                    <table:wrapper>
+                        <table:table>
+                            <ui:repeat
+                                var="file"
+                                value="#{AktuelleSchritteForm.myPlugin.uploadedFiles}"
+                                styleClass="table table-bordered">
+                                <tr>
+                                    <td>
+                                        <h:outputText
+                                            value="#{file.filename}"
+                                            title="#{file.comment}" />
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{file.sizeForGui}" />
+                                    </td>
+                                    <td>
+                                        <!--  delete button -->
+                                        <h:commandLink
+                                            action="#{AktuelleSchritteForm.myPlugin.deleteFile}"
+                                            title="#{msgs.deleteFile}"
+                                            styleClass="btn btn-blank">
+                                            <span
+                                                class="fa fa-trash-o" />
+                                            <f:setPropertyActionListener
+                                                target="#{AktuelleSchritteForm.myPlugin.currentFile}"
+                                                value="#{file}" />
+                                            <f:passThroughAttribute
+                                                name="data-bs-toggle"
+                                                value="tooltip" />
+                                        </h:commandLink>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </table:table>
+                    </table:wrapper>
 
-
-
-                    <table class="table table-bordered">
-
-
-                        <x:dataList
-                            var="file"
-                            value="#{AktuelleSchritteForm.myPlugin.uploadedFiles}"
-                            styleClass="table table-bordered">
-                            <tr>
-                                <td>
-                                    <h:outputText
-                                        value="#{file.filename}"
-                                        title="#{file.comment}" />
-                                </td>
-                                <td>
-                                    <h:outputText value="#{file.sizeForGui}" />
-                                </td>
-                                <td>
-                                    <!--  delete button -->
-                                    <h:commandLink
-                                        action="#{AktuelleSchritteForm.myPlugin.deleteFile}"
-                                        title="#{msgs.deleteFile}">
-                                        <i
-                                            class="btn fa fa-trash-o"
-                                            style="margin-left: 3px" />
-                                        <x:updateActionListener
-                                            property="#{AktuelleSchritteForm.myPlugin.currentFile}"
-                                            value="#{file}" />
-                                    </h:commandLink>
-                                </td>
-                            </tr>
-                        </x:dataList>
-
-
-                    </table>
                 </h:panelGroup>
-            </div>
-        </div>
+            </section:body>
+        </section:section>
     </h:form>
 
 </ui:composition>
