@@ -3,6 +3,10 @@ title: Elektronische Publikationen
 identifier: intranda_step_pdfUpload
 published: true
 description: Dies ist die technische Dokumentation für das Goobi-Plugin zur Integration von elektronischen Publikationen.
+keywords:
+    - Goobi workflow
+    - Plugin
+    - Step Plugin
 ---
 ## Einführung
 Die vorliegende Dokumentation beschreibt die Installation, Konfiguration und den Einsatz eines Plugins zum Upload von Dokumenten in Goobi. Mit Hilfe dieses Plugins können born-digital-Dokumente wie beispielsweise PDF-Dateien direkt in Goobi hochgeladen und verwaltet werden.
